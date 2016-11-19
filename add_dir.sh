@@ -2,10 +2,10 @@
 
 set -e
 
-curdir=`pwd`
+srcdir=`pwd`/processor
 mkdir -p "$1"
 cd "$1"
-for file in "$curdir"/*.do "$curdir"/helpers.sh "$curdir"/intermediate.tmpl; do
+for file in "$srcdir"/*; do
   set +e
   ln -s "$file"
   set -e
