@@ -6,6 +6,7 @@ small blog system using the redo build system
 dependencies
 ------------
 
+- redo
 - python3
 - uuidgen
 - html2text
