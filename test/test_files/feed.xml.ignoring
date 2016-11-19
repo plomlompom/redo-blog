@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<link href="http://example.org/" />
+<link href="http://example.org/feed.xml" rel="self" />
+<title type="html">Yet another blog</title>
+<author><name>Joe Sixpack</name></author>
+<id>urn:uuid:IGNORE</id>
+<updated>IGNORE</updated>
+
+<entry>
+<title type="html">foo</title>
+<id>urn:uuid:IGNORE</id>
+<updated>IGNORE</updated>
+<published>IGNORE</published>
+<link href="http://example.org/bar%20baz.html" />
+<content type="html">
+&lt;p&gt;bar&lt;/p&gt;
+</content>
+</entry>
+
+<entry>
+<title type="html">a title with some nasty characters: &amp;amp;&amp;lt;&amp;gt;&amp;quot;&#x27;</title>
+<id>urn:uuid:IGNORE</id>
+<updated>IGNORE</updated>
+<published>IGNORE</published>
+<link href="http://example.org/foo.html" />
+<content type="html">
+&lt;p&gt;this text contains some special characters: &#x27;&amp;quot;&amp;gt;&amp;lt;&amp;amp;&lt;/p&gt;
+&lt;p&gt;and more than one paragraph&lt;/p&gt;
+</content>
+</entry>
+
+<entry>
+<title type="html">foo &lt;em&gt;bar&lt;/em&gt; &lt;strong&gt;baz&lt;/strong&gt;</title>
+<id>urn:uuid:IGNORE</id>
+<updated>IGNORE</updated>
+<published>IGNORE</published>
+<link href="http://example.org/test.html" />
+<content type="html">
+&lt;p&gt;bar&lt;/p&gt;
+</content>
+</entry>
+
+</feed>

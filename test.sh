@@ -11,6 +11,19 @@ else
 fi
 }
 
+diff_test()
+{
+  generated_file="$1"
+  expected_file="$2"
+  printf "== %s diff test ==\n" "$generated_file"
+  diff "$expected_file" "$generated_file"
+  if [ "$?" = "0" ]; then
+    echo "== test SUCCESS =="
+  else
+    echo "== test FAILURE =="
+  fi
+}
+
 rm -rf test/test_dir
 ./add_dir.sh test/test_dir
 cp test/test_files/test.md test/test_dir/
@@ -26,12 +39,15 @@ for file in test/test_files/*.html test/test_files/*.meta; do
       echo "$file" | grep -q "\.html$"; then
     uuid_test "${cmp_file%.html}.uuid"
   fi
-  printf "== %s diff test ==\n" "$cmp_file"
-  diff "$file" "$cmp_file"
-  if [ "$?" = "0" ]; then
-    echo "== test SUCCESS =="
-  else
-    echo "== test FAILURE =="
-  fi
+  diff_test "$file" "$cmp_file"
 done
 uuid_test "test/test_dir/uuid.meta"
+original_file="test/test_dir/feed.xml"
+generated_file="$original_file".ignoring
+expected_file="test/test_files/feed.xml.ignoring"
+cat "$original_file" | \
+  sed 's/>[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}T[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}Z</>IGNORE</' | \
+  sed 's/>urn:uuid:[0-9a-f]\{8\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{12\}</>urn:uuid:IGNORE</' \
+  > "$generated_file"
+diff_test "$generated_file" "$expected_file"
+rm "$generated_file"
