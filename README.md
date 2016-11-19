@@ -9,6 +9,7 @@ dependencies
 - python3
 - uuidgen
 - html2text
+- pandoc
 
 testing
 -------
