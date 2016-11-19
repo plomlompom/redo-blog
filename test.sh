@@ -8,10 +8,13 @@ cp test/test_files/bar\ baz.md test/test_dir/
 cd test/test_dir
 redo
 cd ../..
-echo "== index.html diff test =="
-diff test/test_files/index.html test/test_dir/index.html
-if [ "$?" = "0" ]; then
-  echo "== test SUCCESS =="
-else
-  echo "== test FAILURE =="
-fi
+for file in test/test_files/*.html; do
+  cmp_file=`echo "$file" | sed 's/test_files/test_dir/'`
+  printf "== %s diff test ==\n" "$cmp_file"
+  diff "$file" "$cmp_file"
+  if [ "$?" = "0" ]; then
+    echo "== test SUCCESS =="
+  else
+    echo "== test FAILURE =="
+  fi
+done
