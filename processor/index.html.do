@@ -2,7 +2,8 @@
 
 # Pull in global dependencies.
 . ./helpers.sh
-redo-ifchange title
+title_file=title.meta
+redo-ifchange "$title_file"
 
 # Write index head.
 cat << EOF
@@ -10,7 +11,7 @@ cat << EOF
 <html>
 <head>
 EOF
-blog_title=`read_and_escape_file title | head -1`
+blog_title=`read_and_escape_file "$title_file" | head -1`
 printf "<title>%s</title>\n</head>\n<body>\n" "$blog_title"
 printf "<h1>%s</h1>\n<ul>\n" "$blog_title"
 

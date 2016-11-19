@@ -2,21 +2,25 @@
 
 # Pull in global dependencies.
 . ./helpers.sh
-redo-ifchange url
-redo-ifchange author
-redo-ifchange uuid
-redo-ifchange title 
+url_file=url.meta
+author_file=author.meta
+uuid_file=uuid.meta
+title_file=title.meta
+redo-ifchange "$url_file"
+redo-ifchange "$author_file"
+redo-ifchange "$uuid_file"
+redo-ifchange "$title_file"
 
 # Build some variables. XML-escape even file contents that should not contain
 # dangerous characters, just to avoid any XML trouble.
-base_url=`cat url | head -1`
+base_url=`cat "$url_file" | head -1`
 url_protocol=`echo $base_url | cut -d ':' -f 1`
 url_basepath=`echo $base_url | cut -d '/' -f 3-`
 url_basepath_escaped=`escape_url "$url_basepath"`
 basepath="$url_protocol""://""$url_basepath_escaped"
-title=`read_and_escape_file title | head -1`
-author=`read_and_escape_file author | head -1`
-uuid=`read_and_escape_file uuid | head -1`
+title=`read_and_escape_file "$title_file" | head -1`
+author=`read_and_escape_file "$author_file" | head -1`
+uuid=`read_and_escape_file "$uuid_file" | head -1`
 
 # Write majority of feed head.
 cat << EOF
@@ -47,13 +51,13 @@ for file in $files; do
   # Build some variables and dependencies.
   intermediate_file="${file%.*}.intermediate"
   htmlfile=`escape_url "${file%.*}.html"`
+  uuid_file="${file%.*}.uuid"
   redo-ifchange "$intermediate_file"
-  redo-ifchange "$uuidfile"
+  redo-ifchange "$uuid_file"
   title=`read_and_escape_file "$intermediate_file" | head -1`
-  uuidfile="${file%.*}.uuid"
-  uuid=`read_and_escape_file "$uuidfile" | head -1`
+  uuid=`read_and_escape_file "$uuid_file" | head -1`
   body=`read_and_escape_file "$intermediate_file" | sed 1d`
-  published=`stat -c%y "$uuidfile"`
+  published=`stat -c%y "$uuid_file"`
   published_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "$published"`
 
   # Write entry.

@@ -3,11 +3,12 @@
 # Pull in global dependencies.
 . ./helpers.sh
 intermediate_file="${1%.html}.intermediate"
-redo-ifchange title
+title_file=title.meta
+redo-ifchange "$title_file" 
 redo-ifchange "$intermediate_file"
 
 # Build entry data.
-blog_title=`read_and_escape_file title | head -1`
+blog_title=`read_and_escape_file "$title_file" | head -1`
 title_html=`cat "$intermediate_file" | head -1`
 title_plaintext=`echo "$title_html" | html2text`
 title_plaintext_escaped=`escape_html "$title_plaintext"`

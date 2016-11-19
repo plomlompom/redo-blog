@@ -18,3 +18,18 @@ for file in test/test_files/*.html; do
     echo "== test FAILURE =="
   fi
 done
+for file in test/test_files/*meta; do
+  if [ "$file" = "test/test_files/uuid.meta" ]; then
+    true
+    # TODO: validate UUID
+  else
+    cmp_file=`echo "$file" | sed 's/test_files/test_dir/'`
+    printf "== %s diff test ==\n" "$cmp_file"
+    diff "$file" "$cmp_file"
+    if [ "$?" = "0" ]; then
+      echo "== test SUCCESS =="
+    else
+      echo "== test FAILURE =="
+    fi
+  fi
+done
