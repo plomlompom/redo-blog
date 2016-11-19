@@ -13,8 +13,8 @@ fi
 
 diff_test()
 {
-  generated_file="$1"
-  expected_file="$2"
+  expected_file="$1"
+  generated_file="$2"
   printf "== %s diff test ==\n" "$generated_file"
   diff "$expected_file" "$generated_file"
   if [ "$?" = "0" ]; then
@@ -49,5 +49,5 @@ cat "$original_file" | \
   sed 's/>[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}T[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}Z</>IGNORE</' | \
   sed 's/>urn:uuid:[0-9a-f]\{8\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{12\}</>urn:uuid:IGNORE</' \
   > "$generated_file"
-diff_test "$generated_file" "$expected_file"
+diff_test "$expected_file" "$generated_file"
 rm "$generated_file"
