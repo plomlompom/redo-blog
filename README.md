@@ -36,3 +36,6 @@ bugs
 Due to bad shell scripting in ./processor/index.html.do and
 ./processor/feed.xml.do (see the FIXME notes there), source files whose names
 contain "$" break the redo processing.
+
+Oh, and don't create a index.rst oder index.md in the redo-managed directory,
+that will also break things.
