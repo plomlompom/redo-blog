@@ -20,8 +20,8 @@ Run ./test.sh.
 setup
 -----
 
-To set up a directory with symbolic links to the relevant .do files and other
-important files, run ./add_dir.sh DIRECTORY.
+To set up a directory with symbolic links to the relevant files in ./processor/,
+run ./add_dir.sh DIRECTORY.
 
 You can then enter the directory and run redo there. This will generate article
 .html files from all .md and .rst files, plus a ./index.html, and a ./feed.xml.
@@ -29,3 +29,10 @@ You can then enter the directory and run redo there. This will generate article
 also be generated a .uuid and a .intermediate file; furthermore, files with
 metadata used in ./feed.xml and ./index.html will be built and can be edited to
 customize the blog: ./url, ./author, ./uuid, ./title.) 
+
+bugs
+----
+
+Due to bad shell scripting in ./processor/index.html.do and
+./processor/feed.xml.do (see the FIXME notes there), source files whose names
+contain "$" break the redo processing.

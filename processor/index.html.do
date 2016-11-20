@@ -15,8 +15,9 @@ blog_title=`read_and_escape_file "$title_file" | head -1`
 printf "<title>%s</title>\n</head>\n<body>\n" "$blog_title"
 printf "<h1>%s</h1>\n<ul>\n" "$blog_title"
 
-# Iterate through entries sorted by lastmod of their source files, write entry
-# list. 
+# Iterate through entries sorted by lastmod of their source files, write entry.
+# FIXME: This ls parsing is a bad way to loop through the sorted files. Besides,
+# $('\0') is a bashism.
 first_run=0
 files=`ls -1t *.rst *.md | tr '\n' $'\0'`
 oldIFS="$IFS"

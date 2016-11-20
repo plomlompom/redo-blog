@@ -35,6 +35,8 @@ printf "<id>urn:uuid:%s</id>\n" "$uuid"
 
 # Iterate through most recent entries (go by lastmod date of source files) to
 # build feed head "updated" element, and individual entries.
+# FIXME: This ls parsing is a bad way to loop through the sorted files. Besides,
+# $('\0') is a bashism.
 first_run=0
 files=`ls -1t *.rst *.md | head -10 | tr '\n' $'\0'`
 oldIFS="$IFS"
