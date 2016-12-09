@@ -39,8 +39,7 @@ cd "$generated_files_dir"
 redo
 cd "$working_dir" 
 
-# Simple file comparison tests.
-uuid_regex="^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+# Simple file comparison tests and UUID tests.
 uuid_test "$generated_files_dir""/uuid.meta"
 for file in "$expected_files_dir"/*.html "$expected_files_dir"/*.meta; do
   sed_expression='s/'"$expected_files_dir_escaped"'/'"$generated_files_dir_escaped"'/'
