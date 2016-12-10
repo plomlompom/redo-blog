@@ -15,25 +15,34 @@ blog_title=`read_and_escape_file "$title_file" | head -1`
 printf "<title>%s</title>\n</head>\n<body>\n" "$blog_title"
 printf "<h1>%s</h1>\n<ul>\n" "$blog_title"
 
-# Iterate through entries sorted by lastmod of their source files, write entry.
-# FIXME: This ls parsing is a bad way to loop through the sorted files. Besides,
-# $'\0' is a bashism.
-first_run=0
-files=`ls -1t *.rst *.md | tr '\n' $'\0'`
-oldIFS="$IFS"
-IFS=$'\0'
-for file in $files; do
-  if [ "$first_run" -lt "1" ]; then
-    IFS="$oldIFS"
-    first_run=1
+# Generate link list entries.
+mkdir -p index_snippets
+for file in ./*.rst ./*.md; do
+  if [ -e "$file" ]; then
+    uuid_file="${file%.*}.uuid"
+    redo-ifchange "$uuid_file"
+    published=`stat -c%y "${uuid_file}"`
+    published_unix=$(date -u "+%s%N" -d "${published}")
+    intermediate_file="${file%.*}.intermediate"
+    html_file="${file%.*}.html"
+    redo-ifchange "$intermediate_file"
+    redo-ifchange "$html_file"
+    title_html=`cat "$intermediate_file" | head -1`
+    html_file_escaped=`escape_url "${html_file#\./}"`
+    printf "<li><a href=\"%s\" />%s</a></li>\n" "$html_file_escaped" "$title_html" > ./index_snippets/${published_unix}
   fi
-  intermediate_file="${file%.*}.intermediate"
-  html_file="${file%.*}.html"
-  redo-ifchange "$intermediate_file"
-  redo-ifchange "$html_file"
-  title_html=`cat "$intermediate_file" | head -1`
-  html_file_escaped=`escape_url "$html_file"`
-  printf "<li><a href=\"%s\" />%s</a></li>\n" "$html_file_escaped" "$title_html"
 done
 
+# Write link list.
+for file in ./index_snippets/*; do
+  touch ./index_snippets/list
+  cat "$file" ./index_snippets/list > ./index_snippets/tmp
+  mv ./index_snippets/tmp ./index_snippets/list
+done
+if [ -e "./index_snippets/list" ]; then
+  cat ./index_snippets/list
+fi
+rm -rf index_snippets
+
+# Write index footer.
 printf "</ul>\n</body>\n</html>"

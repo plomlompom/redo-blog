@@ -89,4 +89,5 @@ for file in ./feed_snippets/*; do
 done
 rm -rf feed_snippets
 
+# Write feed foot.
 printf "</feed>"

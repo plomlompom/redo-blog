@@ -33,8 +33,5 @@ customize the blog: ./url, ./author, ./uuid, ./title.)
 bugs
 ----
 
-Due to bad shell scripting in ./processor/index.html.do (see the FIXME notes
-there), source files whose names contain "$" break the redo processing.
-
-Oh, and don't create a index.rst or index.md in the redo-managed directory,
-that will also break things.
+Don't create a index.rst or index.md in the redo-managed directory, that will
+break things.
