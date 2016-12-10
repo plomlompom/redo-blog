@@ -32,12 +32,14 @@ generated_files_dir_escaped="test\\/test_dir"
 rm -rf "$generated_files_dir" 
 ./add_dir.sh "$generated_files_dir" 
 working_dir=$(pwd)
-cp "$expected_files_dir"/test.md "$generated_files_dir"/
-cp "$expected_files_dir"/foo.rst "$generated_files_dir"/
-cp "$expected_files_dir"/bar\ baz.md "$generated_files_dir"/
 cd "$generated_files_dir"
+cp "$working_dir/$expected_files_dir"/test.md .
 redo
-cd "$working_dir" 
+cp "$working_dir/$expected_files_dir"/bar\ baz.md .
+redo
+cp "$working_dir/$expected_files_dir"/foo.rst .
+redo
+cd "$working_dir"
 
 # Simple file comparison tests and UUID tests.
 uuid_test "$generated_files_dir""/uuid.meta"

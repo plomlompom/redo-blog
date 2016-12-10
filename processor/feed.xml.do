@@ -1,5 +1,29 @@
 #!/bin/sh
 
+build_entry () {
+  file="${1}"
+  uuidfile="${2}"
+  published="${3}"
+  intermediate_file="${file%.*}.intermediate"
+  htmlfile=`escape_url "${file%.*}.html"`
+  redo-ifchange "$uuid_file"
+  redo-ifchange "$intermediate_file"
+  lastmod=`stat -c%y "$file"`
+  lastmod_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "$lastmod"`
+  title=`read_and_escape_file "$intermediate_file" | head -1`
+  uuid=`read_and_escape_file "$uuid_file" | head -1`
+  body=`read_and_escape_file "$intermediate_file" | sed 1d`
+  published_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "${published}"`
+  printf "<entry>\n"
+  printf "<title type=\"html\">%s</title>\n" "$title"
+  printf "<id>urn:uuid:%s</id>\n" "$uuid"
+  printf "<updated>%s</updated>\n" "$lastmod_rfc3339"
+  printf "<published>%s</published>\n" "$published_rfc3339"
+  printf "<link href=\"%s%s\" />\n" "$basepath" "${htmlfile#\./}"
+  printf "<content type=\"html\">\n%s\n</content>\n" "$body"
+  printf "</entry>"
+}
+
 # Pull in global dependencies.
 . ./helpers.sh
 url_file=url.meta
@@ -33,44 +57,36 @@ printf "<title type=\"html\">%s</title>\n" "$title"
 printf "<author><name>%s</name></author>\n" "$author"
 printf "<id>urn:uuid:%s</id>\n" "$uuid"
 
-# Iterate through most recent entries (go by lastmod date of source files) to
-# build feed head "updated" element, and individual entries.
-# FIXME: This ls parsing is a bad way to loop through the sorted files. Besides,
-# $'\0' is a bashism.
-first_run=0
-files=`ls -1t *.rst *.md | head -10 | tr '\n' $'\0'`
-oldIFS="$IFS"
-IFS=$'\0'
-for file in $files; do
-  lastmod=`stat -c%y "$file"`
-  lastmod_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "$lastmod"`
-  if [ "$first_run" -lt "1" ]; then
-    IFS="$oldIFS"
-    printf "<updated>%s</updated>\n\n" "$lastmod_rfc3339" 
-    first_run=1
+# Generate feed entry snippets.
+mkdir -p feed_snippets
+for file in ./*.rst ./*.md; do
+  if [ -e "$file" ]; then
+    uuid_file="${file%.*}.uuid"
+    redo-ifchange "$uuid_file"
+    published=`stat -c%y "${uuid_file}"`
+    published_unix=$(date -u "+%s%N" -d "${published}")
+    entry=$(build_entry "${file}" "${uuid_file}" "${published}")
+    echo "${entry}" > ./feed_snippets/${published_unix}
   fi
-
-  # Build some variables and dependencies.
-  intermediate_file="${file%.*}.intermediate"
-  htmlfile=`escape_url "${file%.*}.html"`
-  uuid_file="${file%.*}.uuid"
-  redo-ifchange "$intermediate_file"
-  redo-ifchange "$uuid_file"
-  title=`read_and_escape_file "$intermediate_file" | head -1`
-  uuid=`read_and_escape_file "$uuid_file" | head -1`
-  body=`read_and_escape_file "$intermediate_file" | sed 1d`
-  published=`stat -c%y "$uuid_file"`
-  published_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "$published"`
-
-  # Write entry.
-  printf "<entry>\n"
-  printf "<title type=\"html\">%s</title>\n" "$title"
-  printf "<id>urn:uuid:%s</id>\n" "$uuid" 
-  printf "<updated>%s</updated>\n" "$lastmod_rfc3339" 
-  printf "<published>%s</published>\n" "$published_rfc3339" 
-  printf "<link href=\"%s%s\" />\n" "$basepath" "$htmlfile"
-  printf "<content type=\"html\">\n%s\n</content>\n" "$body"
-  printf "</entry>\n\n"
 done
+
+# Derive feed modification date from snippets.
+mod_dates=$(grep -hE "^<updated>" ./feed_snippets/* | sed -E 's/<.?updated>//g')
+last_mod_unix=0
+for date in $mod_dates; do
+  date_unix=$(date -u "+%s" -d "${date}")
+  if [ "$date_unix" -gt "$last_mod_unix" ]; then
+    last_mod_unix=$date_unix
+  fi
+done
+lastmod_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "@${last_mod_unix}"`
+printf "<updated>%s</updated>\n\n" "$lastmod_rfc3339"
+
+# Write feed entries.
+for file in ./feed_snippets/*; do
+  cat "${file}"
+  printf "\n"
+done
+rm -rf feed_snippets
 
 printf "</feed>"
