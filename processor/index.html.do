@@ -2,6 +2,7 @@
 
 # Pull in global dependencies.
 . ./helpers.sh
+srcdir=`pwd`
 title_file=title.meta
 redo-ifchange "$title_file"
 
@@ -23,13 +24,9 @@ for file in ./*.rst ./*.md; do
     redo-ifchange "$uuid_file"
     published=`stat -c%y "${uuid_file}"`
     published_unix=$(date -u "+%s%N" -d "${published}")
-    intermediate_file="${file%.*}.intermediate"
-    html_file="${file%.*}.html"
-    redo-ifchange "$intermediate_file"
-    redo-ifchange "$html_file"
-    title_html=`cat "$intermediate_file" | head -1`
-    html_file_escaped=`escape_url "${html_file#\./}"`
-    printf "<li><a href=\"%s\" />%s</a></li>\n" "$html_file_escaped" "$title_html" > ./index_snippets/${published_unix}
+    snippet_file="${file%.*}.index_snippet"
+    redo-ifchange "$snippet_file"
+    ln -s "$srcdir/$snippet_file" "./index_snippets/${published_unix}"
   fi
 done
 
