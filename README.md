@@ -25,10 +25,11 @@ run ./add_dir.sh DIRECTORY.
 
 You can then enter the directory and run redo there. This will generate article
 .html files from all .md and .rst files, plus a ./index.html, and a ./feed.xml.
-(Some other metadata files will also be generated: for each article, there will
-also be generated a .uuid and a .intermediate file; furthermore, files with
-metadata used in ./feed.xml and ./index.html will be built and can be edited to
-customize the blog: ./url, ./author, ./uuid, ./title.) 
+These files will be linked to symbolically in a directory ./public/. (Some
+metadata files will also be generated below ./metadata/: for each article, there
+will be generated a .uuid and a .intermediate file; furthermore, files for data
+used in ./feed.xml and ./index.html will be built and can be edited to customize
+the blog: ./metadata/url, ./metadata/author, ./metadata/uuid, ./metadata/title.) 
 
 bugs
 ----
