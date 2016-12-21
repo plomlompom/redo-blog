@@ -5,11 +5,12 @@
 src_file=$(get_source_file "$1")
 uuid_file="${1%.feed_snippet}.uuid"
 redo-ifchange "$uuid_file"
-intermediate_file="${src_file%.*}.intermediate"
+intermediate_file="${1%.feed_snippet}.intermediate"
 redo-ifchange "$intermediate_file"
 
 # Get variables, write entry.
 html_file=`escape_url "${src_file%.*}.html"`
+html_file=${html_file#*/}
 lastmod=`stat -c%y "$src_file"`
 lastmod_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "$lastmod"`
 published=`stat -c%y "$uuid_file"`
@@ -22,6 +23,6 @@ printf "<title type=\"html\">%s</title>\n" "$title"
 printf "<id>urn:uuid:%s</id>\n" "$uuid"
 printf "<updated>%s</updated>\n" "$lastmod_rfc3339"
 printf "<published>%s</published>\n" "$published_rfc3339"
-printf "<link href=\"%s%s\" />\n" "$(get_basepath)" "${html_file#\./}"
+printf "<link href=\"%s%s\" />\n" "$(get_basepath)" "${html_file}"
 printf "<content type=\"html\">\n%s\n</content>\n" "$body"
 printf "</entry>\n"

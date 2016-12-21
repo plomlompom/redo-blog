@@ -1,9 +1,10 @@
 #!/bin/sh
 
 # Pull in global dependencies.
-. ./helpers.sh
+metadata_dir=.meta
+. "$metadata_dir"/helpers.sh
 srcdir=`pwd`
-title_file=title.meta
+title_file="$metadata_dir"/title
 redo-ifchange "$title_file"
 
 # Write index head.
@@ -17,29 +18,30 @@ printf "<title>%s</title>\n</head>\n<body>\n" "$blog_title"
 printf "<h1>%s</h1>\n<ul>\n" "$blog_title"
 
 # Generate link list entries.
-mkdir -p index_snippets
+tmp_snippets_dir=.tmp_index_snippets
+mkdir -p "$tmp_snippets_dir"
 for file in ./*.rst ./*.md; do
   if [ -e "$file" ]; then
-    uuid_file="${file%.*}.uuid"
+    uuid_file="${metadata_dir}/${file%.*}.uuid"
     redo-ifchange "$uuid_file"
     published=`stat -c%y "${uuid_file}"`
     published_unix=$(date -u "+%s%N" -d "${published}")
-    snippet_file="${file%.*}.index_snippet"
+    snippet_file="${metadata_dir}/${file%.*}.index_snippet"
     redo-ifchange "$snippet_file"
-    ln -s "$srcdir/$snippet_file" "./index_snippets/${published_unix}"
+    ln -s "$srcdir/$snippet_file" "./${tmp_snippets_dir}/${published_unix}"
   fi
 done
 
 # Write link list.
-for file in ./index_snippets/*; do
-  touch ./index_snippets/list
-  cat "$file" ./index_snippets/list > ./index_snippets/tmp
-  mv ./index_snippets/tmp ./index_snippets/list
+for file in ./${tmp_snippets_dir}/*; do
+  touch ./${tmp_snippets_dir}/list
+  cat "$file" ./${tmp_snippets_dir}/list > ./${tmp_snippets_dir}/tmp
+  mv ./${tmp_snippets_dir}/tmp ./${tmp_snippets_dir}/list
 done
-if [ -e "./index_snippets/list" ]; then
-  cat ./index_snippets/list
+if [ -e "./${tmp_snippets_dir}/list" ]; then
+  cat ./${tmp_snippets_dir}/list
 fi
-rm -rf index_snippets
+rm -rf "${tmp_snippets_dir}"
 
 # Write index footer.
 printf "</ul>\n</body>\n</html>"

@@ -2,13 +2,13 @@
 
 uuid_test()
 {
-uuid_file="$1"
-printf "== %s UUID pattern match test ==\n" "$uuid_file"
-if cat "$uuid_file" | grep -Eq "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"; then
-  echo "== test SUCCESS =="
-else
-  echo "== test FAILURE =="
-fi
+  uuid_file="$1"
+  printf "== %s UUID pattern match test ==\n" "$uuid_file"
+  if cat "$uuid_file" | grep -Eq "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"; then
+    echo "== test SUCCESS =="
+  else
+    echo "== test FAILURE =="
+  fi
 }
 
 diff_test()
@@ -42,13 +42,14 @@ redo
 cd "$working_dir"
 
 # Simple file comparison tests and UUID tests.
-uuid_test "$generated_files_dir""/uuid.meta"
-for file in "$expected_files_dir"/*.html "$expected_files_dir"/*.meta; do
+uuid_test "$generated_files_dir""/.meta/uuid"
+for file in "$expected_files_dir"/*.html "$expected_files_dir"/.meta/*; do
   sed_expression='s/'"$expected_files_dir_escaped"'/'"$generated_files_dir_escaped"'/'
   cmp_file=`echo "$file" | sed "$sed_expression"`
   if [ ! "$file" = "$expected_files_dir""/index.html" ] && \
       echo "$file" | grep -q "\.html$"; then
-    uuid_test "${cmp_file%.html}.uuid"
+    basename=$(basename "$cmp_file")
+    uuid_test "${generated_files_dir}/.meta/${basename%.html}.uuid"
   fi
   diff_test "$file" "$cmp_file"
 done

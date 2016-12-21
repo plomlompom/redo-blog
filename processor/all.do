@@ -1,24 +1,28 @@
 #!/bin/sh
 
+metadata_dir=.meta
+
 # Remove target files for which no sources files can be found.
-for file in *.intermediate; do
+for file in "$metadata_dir"/*.intermediate; do
+  basename=$(basename "$file")
   if   test -f "$file" &&
-     ! test -f "${file%.intermediate}.md" &&
-     ! test -f "${file%.intermediate}.rst"; then
+     ! test -f "${basename%.intermediate}.md" &&
+     ! test -f "${basename%.intermediate}.rst"; then
     rm "$file"
   fi
 done
-for file in *.uuid; do
+for file in "$metadata_dir"/*.uuid; do
+  basename=$(basename "$file")
   if   test -f "$file" &&
-     ! test -f "${file%.uuid}.md" &&
-     ! test -f "${file%.uuid}.rst"; then
+     ! test -f "${basename%.uuid}.md" &&
+     ! test -f "${basename%.uuid}.rst"; then
     rm "$file"
   fi
 done
 for file in *.html; do
   if   test -f "$file" &&
      ! test "$file" = "index.html" &&
-     ! test -f "${file%.html}.intermediate"; then
+     ! test -f "${metadata_dir}/${file%.html}.intermediate"; then
     rm "$file"
   fi
 done
@@ -27,12 +31,13 @@ done
 # of the all.do script on them / build them if necessary.
 for file in *.rst *.md; do
   if test -f "$file"; then
-    redo-ifchange "${file%.*}.intermediate"
+    redo-ifchange "${metadata_dir}/${file%.*}.intermediate"
   fi
 done
-for file in *.intermediate; do
+for file in "$metadata_dir"/*.intermediate; do
   if test -f "$file"; then
-    redo-ifchange "${file%.*}.html"
+    basename=$(basename "$file")
+    redo-ifchange "${basename%.intermediate}.html"
   fi
 done
 

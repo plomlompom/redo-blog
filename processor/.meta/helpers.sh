@@ -16,7 +16,7 @@ escape_url() {
 }
 
 get_basepath() {
-  url_file=url.meta
+  url_file="$1"url
   redo-ifchange "$url_file"
   base_url=`cat "$url_file" | head -1`
   url_protocol=`echo $base_url | cut -d ':' -f 1`
@@ -27,8 +27,8 @@ get_basepath() {
 }
 
 get_source_file() {
-  md_file="${1%.*}.md"
-  rst_file="${1%.*}.rst"
+  md_file="../${1%.*}.md"
+  rst_file="../${1%.*}.rst"
   if [ -f "$rst_file" ]; then
     src_file="$rst_file"
   elif [ -f "$md_file" ]; then
