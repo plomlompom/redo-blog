@@ -64,3 +64,15 @@ cat "$original_file" | \
   > "$generated_file"
 diff_test "$expected_file" "$generated_file"
 rm "$generated_file"
+
+# Check symbolic links.
+for file in "$generated_files_dir"/feed.xml "$generated_files_dir"/*.html; do
+  basename=$(basename "$file")
+  linkname=$(readlink "$generated_files_dir/public/$basename")
+  printf "== public/%s symbolic link test ==\n" "$basename"
+  if [ "$working_dir/$generated_files_dir/$basename" = "$linkname" ]; then
+    echo "== test SUCCESS =="
+  else
+    echo "== test FAILURE =="
+  fi
+done

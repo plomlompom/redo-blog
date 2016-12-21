@@ -24,6 +24,5 @@ EOF
 
 # Write remaining entry head and body. 
 printf "<title>%s – %s</title>\n</head>\n<body>\n" "$blog_title" "$title_plaintext_escaped"
-#printf "<title>%s – %s</title>\n</head>\n<body>\n" "$blog_title" "$entry_title"
 printf "<h1>%s</h1>\n" "$title_html"
 printf "<section>\n%s\n</section>\n</body>\n</html>" "$body"

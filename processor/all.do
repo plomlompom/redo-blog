@@ -1,6 +1,10 @@
 #!/bin/sh
 
+# Set up directories.
 metadata_dir=.meta
+public_dir=public
+cur_dir=$(pwd)
+mkdir -p "$public_dir"
 
 # Remove target files for which no sources files can be found.
 for file in "$metadata_dir"/*.intermediate; do
@@ -37,10 +41,14 @@ done
 for file in "$metadata_dir"/*.intermediate; do
   if test -f "$file"; then
     basename=$(basename "$file")
-    redo-ifchange "${basename%.intermediate}.html"
+    html_file=${basename%.intermediate}.html
+    redo-ifchange "$html_file"
+    ln -sf "$cur_dir/$html_file" "${public_dir}/"
   fi
 done
 
 # Regenerate feed and index pages. Always.
-redo "feed.xml"
-redo "index.html"
+redo feed.xml
+ln -sf "$cur_dir"/feed.xml "${public_dir}/"
+redo index.html
+ln -sf "$cur_dir"/index.html "${public_dir}/"
