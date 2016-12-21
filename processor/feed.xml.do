@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Pull in global dependencies.
-metadata_dir=.meta
-. "$metadata_dir"/helpers.sh
+. ./helpers.sh
+metadata_dir=metadata
 author_file="$metadata_dir"/author
 uuid_file="$metadata_dir"/uuid
 title_file="$metadata_dir"/title

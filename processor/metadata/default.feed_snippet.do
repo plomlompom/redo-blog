@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Pull in dependencies. 
-. ./helpers.sh
+. ../helpers.sh
 src_file=$(get_source_file "$1")
 uuid_file="${1%.feed_snippet}.uuid"
 redo-ifchange "$uuid_file"

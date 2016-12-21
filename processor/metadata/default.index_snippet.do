@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Pull in dependencies.
-. ./helpers.sh
+. ../helpers.sh
 src_file=$(get_source_file "$1")
 intermediate_file="${1%.index_snippet}.intermediate"
 redo-ifchange "$intermediate_file"

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Set up directories.
-metadata_dir=.meta
+metadata_dir=metadata
 public_dir=public
 cur_dir=$(pwd)
 mkdir -p "$public_dir"

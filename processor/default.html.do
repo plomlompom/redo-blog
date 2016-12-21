@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Pull in global dependencies.
-metadata_dir=.meta
-. "$metadata_dir"/helpers.sh
+. ./helpers.sh
+metadata_dir=metadata
 intermediate_file="${metadata_dir}/${1%.html}.intermediate"
 title_file="${metadata_dir}"/title
 redo-ifchange "$title_file" 

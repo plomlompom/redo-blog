@@ -42,14 +42,14 @@ redo
 cd "$working_dir"
 
 # Simple file comparison tests and UUID tests.
-uuid_test "$generated_files_dir""/.meta/uuid"
-for file in "$expected_files_dir"/*.html "$expected_files_dir"/.meta/*; do
+uuid_test "$generated_files_dir""/metadata/uuid"
+for file in "$expected_files_dir"/*.html "$expected_files_dir"/metadata/*; do
   sed_expression='s/'"$expected_files_dir_escaped"'/'"$generated_files_dir_escaped"'/'
   cmp_file=`echo "$file" | sed "$sed_expression"`
   if [ ! "$file" = "$expected_files_dir""/index.html" ] && \
       echo "$file" | grep -q "\.html$"; then
     basename=$(basename "$cmp_file")
-    uuid_test "${generated_files_dir}/.meta/${basename%.html}.uuid"
+    uuid_test "${generated_files_dir}/metadata/${basename%.html}.uuid"
   fi
   diff_test "$file" "$cmp_file"
 done
