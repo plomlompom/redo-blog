@@ -9,8 +9,7 @@ intermediate_file="${1%.feed_snippet}.intermediate"
 redo-ifchange "$intermediate_file"
 
 # Get variables, write entry.
-html_file=`escape_url "${src_file%.*}.html"`
-html_file=${html_file#*/}
+html_file=$(escape_url "${1%.feed_snippet}.html")
 lastmod=`stat -c%y "$src_file"`
 lastmod_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "$lastmod"`
 published=`stat -c%y "$uuid_file"`

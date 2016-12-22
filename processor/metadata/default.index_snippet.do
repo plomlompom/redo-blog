@@ -9,6 +9,6 @@ html_file="${src_file%.*}.html"
 redo-ifchange "$html_file"
 
 # Get variables, write entry.
-title_html=`cat "$intermediate_file" | head -1`
-html_file_escaped=`escape_url "${html_file#*/}"`
+title_html=$(cat "$intermediate_file" | head -1)
+html_file_escaped=$(escape_url "${1%.index_snippet}.html")
 printf "<li><a href=\"%s\" />%s</a></li>\n" "$html_file_escaped" "$title_html"
