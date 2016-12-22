@@ -36,12 +36,7 @@ done
 for file in *.rst *.md; do
   if test -f "$file"; then
     redo-ifchange "${metadata_dir}/${file%.*}.intermediate"
-  fi
-done
-for file in "$metadata_dir"/*.intermediate; do
-  if test -f "$file"; then
-    basename=$(basename "$file")
-    html_file=${basename%.intermediate}.html
+    html_file=${file%.*}.html
     redo-ifchange "$html_file"
     ln -sf "$cur_dir/$html_file" "${public_dir}/"
   fi
