@@ -1,6 +1,6 @@
 #!/bin/sh
 
-template=intermediate.tmpl
+template=intermediate.pandoc_tmpl
 uuidfile="${1%.intermediate}.uuid"
 redo-ifchange "$uuidfile"
 redo-ifchange "$template"
