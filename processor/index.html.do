@@ -6,16 +6,11 @@ metadata_dir=metadata
 srcdir=`pwd`
 title_file="$metadata_dir"/title
 redo-ifchange "$title_file"
+template_file="${metadata_dir}"/index.tmpl
+redo-ifchange "$template_file"
 
-# Write index head.
-cat << EOF
-<!DOCTYPE html>
-<html>
-<head>
-EOF
-blog_title=`read_and_escape_file "$title_file" | head -1`
-printf "<title>%s</title>\n</head>\n<body>\n" "$blog_title"
-printf "<h1>%s</h1>\n<ul>\n" "$blog_title"
+# Build blog title.
+title=$(read_and_escape_file "$title_file" | head -1 | prep_sed)
 
 # Generate link list entries.
 tmp_snippets_dir=.tmp_index_snippets
@@ -39,9 +34,13 @@ for file in ./${tmp_snippets_dir}/*; do
   mv ./${tmp_snippets_dir}/tmp ./${tmp_snippets_dir}/list
 done
 if [ -e "./${tmp_snippets_dir}/list" ]; then
-  cat ./${tmp_snippets_dir}/list
+  list=$(cat ./${tmp_snippets_dir}/list | prep_sed)
 fi
 rm -rf "${tmp_snippets_dir}"
 
-# Write index footer.
-printf "</ul>\n</body>\n</html>"
+# Put data into template.
+template=$(cat "$template_file")
+printf "%s" "$template" | \
+sed 's/%TITLE%/'"$title"'/g' | \
+sed 's/%LIST%/'"$list"'/g' | \
+tr '\a' '%'

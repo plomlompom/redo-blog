@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Yet another blog – a title with some nasty characters: &amp;&lt;&gt;&quot;&#x27;</title>
+<title>Yet another blog – a title with some nasty characters: &amp;&lt;&gt;&quot;&#x27; %BODY%</title>
 </head>
 <body>
-<h1>a title with some nasty characters: &amp;&lt;&gt;&quot;'</h1>
+<h1>a title with some nasty characters: &amp;&lt;&gt;&quot;' %BODY%</h1>
 <section>
-<p>this text contains some special characters: '&quot;&gt;&lt;&amp;</p>
+<p>this text contains some special characters: /;%'&quot;&gt;&lt;&amp;äöüß</p>
 <p>and more than one paragraph</p>
+<p>note that should be ignored but \ should give a backlash</p>
 </section>
 </body>
 </html>

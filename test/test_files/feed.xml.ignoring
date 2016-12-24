@@ -30,14 +30,15 @@
 </entry>
 
 <entry>
-<title type="html">a title with some nasty characters: &amp;amp;&amp;lt;&amp;gt;&amp;quot;&#x27;</title>
+<title type="html">a title with some nasty characters: &amp;amp;&amp;lt;&amp;gt;&amp;quot;&#x27; %BODY%</title>
 <id>urn:uuid:IGNORE</id>
 <updated>IGNORE</updated>
 <published>IGNORE</published>
 <link href="http://example.org/foo.html" />
 <content type="html">
-&lt;p&gt;this text contains some special characters: &#x27;&amp;quot;&amp;gt;&amp;lt;&amp;amp;&lt;/p&gt;
+&lt;p&gt;this text contains some special characters: /;%&#x27;&amp;quot;&amp;gt;&amp;lt;&amp;amp;äöüß&lt;/p&gt;
 &lt;p&gt;and more than one paragraph&lt;/p&gt;
+&lt;p&gt;note that should be ignored but \ should give a backlash&lt;/p&gt;
 </content>
 </entry>
 
