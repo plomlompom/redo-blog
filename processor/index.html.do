@@ -29,9 +29,11 @@ done
 
 # Write link list.
 for file in ./${tmp_snippets_dir}/*; do
-  touch ./${tmp_snippets_dir}/list
-  cat "$file" ./${tmp_snippets_dir}/list > ./${tmp_snippets_dir}/tmp
-  mv ./${tmp_snippets_dir}/tmp ./${tmp_snippets_dir}/list
+  if [ -e "$file" ]; then
+    touch ./${tmp_snippets_dir}/list
+    cat "$file" ./${tmp_snippets_dir}/list > ./${tmp_snippets_dir}/tmp
+    mv ./${tmp_snippets_dir}/tmp ./${tmp_snippets_dir}/list
+  fi
 done
 if [ -e "./${tmp_snippets_dir}/list" ]; then
   list=$(cat ./${tmp_snippets_dir}/list | prep_sed)

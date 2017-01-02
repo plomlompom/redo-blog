@@ -60,8 +60,10 @@ printf "<updated>%s</updated>\n\n" "$lastmod_rfc3339"
 
 # Write feed entries.
 for file in ./${tmp_snippets_dir}/*; do
-  cat "${file}"
-  printf "\n"
+  if [ -e "$file" ]; then
+    cat "${file}"
+    printf "\n"
+  fi
 done
 rm -rf "$tmp_snippets_dir"
 
