@@ -20,6 +20,7 @@ title=`read_and_escape_file "$title_file" | head -1`
 author=`read_and_escape_file "$author_file" | head -1`
 uuid=`read_and_escape_file "$uuid_file" | head -1`
 tmp_snippets_dir=.tmp_feed_snippets
+feed_gen_date=$(stat -c%Y "${uuid_file}")
 
 # Write majority of feed head.
 cat << EOF
@@ -38,29 +39,28 @@ for file in ./*.rst ./*.md; do
   if [ -e "$file" ]; then
     uuid_file="${metadata_dir}/${file%.*}.uuid"
     redo-ifchange "$uuid_file"
-    published=`stat -c%y "${uuid_file}"`
-    published_unix=$(date -u "+%s%N" -d "${published}")
+    published=$(stat -c%Y "${uuid_file}")
     snippet_file=./${metadata_dir}/"${file%.*}.feed_snippet"
     redo-ifchange "$snippet_file"
-    ln -s "$srcdir/$snippet_file" "./${tmp_snippets_dir}/${published_unix}"
+    ln -s "$srcdir/$snippet_file" "./${tmp_snippets_dir}/${published}"
   fi
 done
 
-# Derive feed modification date from snippets.
+# Derive feed modification date from snippets. Fallback to uuid file mod date.
 n_snippet_files=`ls -1 ./${metadata_dir}/*.feed_snippet 2>/dev/null | wc -l`
 if [ $n_snippet_files != 0 ]
 then
   mod_dates=$(grep -hE "^<updated>" ./${metadata_dir}/*.feed_snippet | sed -E 's/<.?updated>//g')
 fi
-last_mod_unix=0
+last_mod_unix=$feed_gen_date
 for date in $mod_dates; do
   date_unix=$(date -u "+%s" -d "${date}")
   if [ "$date_unix" -gt "$last_mod_unix" ]; then
     last_mod_unix=$date_unix
   fi
 done
-lastmod_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "@${last_mod_unix}"`
-printf "<updated>%s</updated>\n\n" "$lastmod_rfc3339"
+last_mod_rfc3339=`date -u "+%Y-%m-%dT%TZ" -d "@${last_mod_unix}"`
+printf "<updated>%s</updated>\n\n" "$last_mod_rfc3339"
 
 # Write feed entries.
 for file in ./${tmp_snippets_dir}/*; do
