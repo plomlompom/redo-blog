@@ -81,6 +81,3 @@ bugs
 
 Don't create a index.rst or index.md in the redo-managed directory, that will
 break things.
-
-Running redo without a single blog entry source file (.md or .rst) in the
-directory will also break things.
