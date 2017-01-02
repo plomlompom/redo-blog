@@ -10,6 +10,7 @@ cat << EOF
 </head>
 <body>
 <h1>%TITLE%</h1>
+<p><a href="feed.xml">feed</a></p>
 <ul>
 %LIST%
 </ul>
