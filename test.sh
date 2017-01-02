@@ -26,9 +26,7 @@ diff_test()
 
 # Set up test directory. 
 expected_files_dir="test/test_files"
-expected_files_dir_escaped="test\\/test_files"
 generated_files_dir="test/test_dir"
-generated_files_dir_escaped="test\\/test_dir"
 rm -rf "$generated_files_dir" 
 ./add_dir.sh "$generated_files_dir" 
 working_dir=$(pwd)
@@ -42,26 +40,37 @@ cp "$working_dir/$expected_files_dir"/foo.rst .
 redo
 cd "$working_dir"
 
-# Simple file comparison tests and UUID tests.
+# Compare metadata files.
 uuid_test "$generated_files_dir""/metadata/uuid"
-for file in "$expected_files_dir"/*.html "$expected_files_dir"/metadata/*; do
-  sed_expression='s/'"$expected_files_dir_escaped"'/'"$generated_files_dir_escaped"'/'
-  cmp_file=`echo "$file" | sed "$sed_expression"`
-  if [ ! "$file" = "$expected_files_dir""/index.html" ] && \
-      echo "$file" | grep -q "\.html$"; then
-    basename=$(basename "$cmp_file")
-    uuid_test "${generated_files_dir}/metadata/${basename%.html}.uuid"
-  fi
+for file in "$expected_files_dir"/metadata/*; do
+  basename=$(basename "$file")
+  cmp_file="$generated_files_dir/metadata/$basename"
   diff_test "$file" "$cmp_file"
 done
 
-# To compare feed.xml, ignore all variable date and uuid strings.
+# Compare generated HTML files. Ignore variable dates.
+for file in "$expected_files_dir"/*.html.ignoring; do
+  basename=$(basename "$file")
+  cmp_file="$generated_files_dir/${basename%.ignoring}"
+  if [ ! "$file" = "$expected_files_dir""/index.html.ignoring" ]; then
+    uuid_test "${generated_files_dir}/metadata/${basename%.html.ignoring}.uuid"
+  fi
+  generated_file="$cmp_file".ignoring
+  cat "$cmp_file" | \
+    sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/IGNORE/g' | \
+    sed 's/IGNORET[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}Z/IGNORE/g' | \
+    sed 's/IGNORE [0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\} (UTC)/IGNORE/g' \
+    > "$generated_file"
+  diff_test "$file" "$generated_file"
+done
+
+# Compare feed files. Ignore variable dates and UUIDs.
 original_file="$generated_files_dir""/feed.xml"
 generated_file="$original_file".ignoring
 expected_file="$expected_files_dir""/feed.xml.ignoring"
 cat "$original_file" | \
-  sed 's/>[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}T[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}Z</>IGNORE</' | \
-  sed 's/>urn:uuid:[0-9a-f]\{8\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{12\}</>urn:uuid:IGNORE</' \
+  sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}T[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}Z/IGNORE/g' | \
+  sed 's/urn:uuid:[0-9a-f]\{8\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{4\}-[0-9a-f]\{12\}/urn:uuid:IGNORE/g' \
   > "$generated_file"
 diff_test "$expected_file" "$generated_file"
 rm "$generated_file"

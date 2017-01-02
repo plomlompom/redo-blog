@@ -6,7 +6,10 @@
 <body>
 <a href="index.html">Yet another blog</a>
 <article>
+<header>
 <h1>a title with some nasty characters: &amp;&lt;&gt;&quot;' %BODY%</h1>
+<p><time datetime="IGNORE">IGNORE</time></p>
+</header>
 <p>this text contains some special characters: /;%'&quot;&gt;&lt;&amp;äöüß</p>
 <h2 id="some-sub-heading">some sub-heading</h2>
 <p>and more than one paragraph</p>

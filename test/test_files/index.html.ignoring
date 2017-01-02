@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="alternate" type="application/rss+xml" title="atom feed" href="feed.xml" />
+<title>Yet another blog</title>
+</head>
+<body>
+<h1>Yet another blog</h1>
+<ul>
+<li><a href="foo.html">a title with some nasty characters: &amp;&lt;&gt;&quot;' %BODY%</a> (<time>IGNORE</time>)</li>
+<li><a href="bar%20baz.html">foo</a> (<time>IGNORE</time>)</li>
+<li><a href="test.html">foo <em>bar</em> <strong>baz</strong></a> (<time>IGNORE</time>)</li>
+</ul>
+</body>
+</html>

@@ -6,7 +6,10 @@
 <body>
 <a href="index.html">Yet another blog</a>
 <article>
+<header>
 <h1>foo</h1>
+<p><time datetime="IGNORE">IGNORE</time></p>
+</header>
 <h2 id="bar">bar</h2>
 <p>bar</p>
 <h3 id="bar-1">bar</h3>
