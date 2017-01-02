@@ -61,7 +61,7 @@ called `blog`:
       git add metadata/*.automatic_metadata
     fi
     status=\$(git status -s)
-    n_updates=\$(printf "$status" | grep -vE '^\?\?' | wc -l)
+    n_updates=\$(printf "\$status" | grep -vE '^\?\?' | wc -l)
     if [ "\$n_updates" -gt 0 ]; then
       git commit -a -m 'Update metadata'
     fi
