@@ -55,7 +55,11 @@ called `blog`:
     git checkout -f
     cd "\$GIT_WORK_TREE"
     redo
-    git add metadata/author metadata/url metadata/title metadata/*.tmpl metadata/*.automatic_metadata metadata/automatic_metadata
+    git add metadata/author metadata/url metadata/title metadata/*.tmpl metadata/automatic_metadata
+    count=\$(ls -1 metadata/*.automatic_metadata 2>/dev/null | wc -l)
+    if [ "\$count" != 0 ]; then
+      git add metadata/*.automatic_metadata
+    fi
     status=\$(git status -s)
     n_updates=\$(printf "$status" | grep -vE '^\?\?' | wc -l)
     if [ "\$n_updates" -gt 0 ]; then
