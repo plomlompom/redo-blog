@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>Yet another blog</h1>
+<p><a href="feed.xml">feed</a></p>
 <ul>
 <li><a href="foo.html">a title with some nasty characters: &amp;&lt;&gt;&quot;' %BODY%</a> (<time>IGNORE</time>)</li>
 <li><a href="bar%20baz.html">foo</a> (<time>IGNORE</time>)</li>
