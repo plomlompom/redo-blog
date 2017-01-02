@@ -46,7 +46,7 @@ called `blog`:
     cat << EOF > blog.git/hooks/post-update
     #!/bin/sh
     BLOGDIR=~/blog
-    GIT_WORK_TREE=$BLOGDIR git checkout -f
+    GIT_WORK_TREE=\$BLOGDIR git checkout -f
     cd \$BLOGDIR
     redo
     EOF
