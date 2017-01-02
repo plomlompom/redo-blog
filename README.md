@@ -107,5 +107,4 @@ break things.
 The article title is derived in .md files from a first line prefixed with `%`,
 while all other headings are treated as sub-headings. In .rst files, the title
 is derived from a heading that must be at the top of the document, and be of an
-adornment style (such as underlining with `=`) that must be used only once in
-it.
+adornment style (such as underlining with `=`) used only once in it.

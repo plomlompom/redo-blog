@@ -101,7 +101,7 @@ for file in "$expected_files_dir"/*.html.ignoring; do
   cat "$cmp_file" | \
     sed 's/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/IGNORE/g' | \
     sed 's/IGNORET[0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\}Z/IGNORE/g' | \
-    sed 's/IGNORE [0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\} (UTC)/IGNORE/g' \
+    sed 's/IGNORE [0-9]\{2\}:[0-9]\{2\} (UTC)/IGNORE/g' \
     > "$generated_file"
   diff_test "$file" "$generated_file"
 done

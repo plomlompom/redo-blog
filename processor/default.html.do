@@ -21,7 +21,7 @@ title_plaintext=$(escape_html "$title_plaintext" | prep_sed)
 body=$(cat "$intermediate_file" | sed 1d | prep_sed)
 datetime_created_unix=$(get_creation_date_from_meta_file_seconds "$meta_file")
 datetime_created_rfc3339=$(date -u "+%Y-%m-%dT%TZ" -d "@${datetime_created_unix}")
-datetime_created_friendly=$(date -u "+%Y-%m-%d %T (UTC)" -d "@${datetime_created_unix}")
+datetime_created_friendly=$(date -u "+%Y-%m-%d %H:%M (UTC)" -d "@${datetime_created_unix}")
 
 # Put data into template.
 template=$(cat "$template_file")
