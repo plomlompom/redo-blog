@@ -47,7 +47,11 @@ for file in ./*.rst ./*.md; do
 done
 
 # Derive feed modification date from snippets.
-mod_dates=$(grep -hE "^<updated>" ./${metadata_dir}/*.feed_snippet | sed -E 's/<.?updated>//g')
+n_snippet_files=`ls -1 ./${metadata_dir}/*.feed_snippet 2>/dev/null | wc -l`
+if [ $n_snippet_files != 0 ]
+then
+  mod_dates=$(grep -hE "^<updated>" ./${metadata_dir}/*.feed_snippet | sed -E 's/<.?updated>//g')
+fi
 last_mod_unix=0
 for date in $mod_dates; do
   date_unix=$(date -u "+%s" -d "${date}")
