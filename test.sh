@@ -33,6 +33,7 @@ rm -rf "$generated_files_dir"
 ./add_dir.sh "$generated_files_dir" 
 working_dir=$(pwd)
 cd "$generated_files_dir"
+redo
 cp "$working_dir/$expected_files_dir"/test.md .
 redo
 cp "$working_dir/$expected_files_dir"/bar\ baz.md .
