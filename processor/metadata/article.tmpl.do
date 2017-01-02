@@ -9,10 +9,10 @@ cat << EOF
 </head>
 <body>
 <a href="index.html">%BLOG_TITLE%</a>
+<article>
 <h1>%ARTICLE_TITLE_HTML%</h1>
-<section>
 %BODY%
-</section>
+</article>
 </body>
 </html>
 EOF

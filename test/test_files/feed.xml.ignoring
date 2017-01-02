@@ -15,6 +15,8 @@
 <link href="http://example.org/test.html" />
 <content type="html">
 &lt;p&gt;foo&lt;/p&gt;
+&lt;h2 id=&quot;bar&quot;&gt;bar&lt;/h2&gt;
+&lt;p&gt;baz&lt;/p&gt;
 </content>
 </entry>
 
@@ -25,6 +27,9 @@
 <published>IGNORE</published>
 <link href="http://example.org/bar%20baz.html" />
 <content type="html">
+&lt;h2 id=&quot;bar&quot;&gt;bar&lt;/h2&gt;
+&lt;p&gt;bar&lt;/p&gt;
+&lt;h3 id=&quot;bar-1&quot;&gt;bar&lt;/h3&gt;
 &lt;p&gt;bar&lt;/p&gt;
 </content>
 </entry>
@@ -37,7 +42,9 @@
 <link href="http://example.org/foo.html" />
 <content type="html">
 &lt;p&gt;this text contains some special characters: /;%&#x27;&amp;quot;&amp;gt;&amp;lt;&amp;amp;äöüß&lt;/p&gt;
+&lt;h2 id=&quot;some-sub-heading&quot;&gt;some sub-heading&lt;/h2&gt;
 &lt;p&gt;and more than one paragraph&lt;/p&gt;
+&lt;h2 id=&quot;another-sub-heading&quot;&gt;another sub-heading&lt;/h2&gt;
 &lt;p&gt;note that should be ignored but \ should give a backlash&lt;/p&gt;
 </content>
 </entry>

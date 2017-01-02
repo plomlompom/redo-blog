@@ -1,7 +1,8 @@
 redo-blog
 =========
 
-small blog system using the redo build system
+small blog system using the redo build system, with blog article files written
+in (pandoc) Markdown or ReStructured Text.
 
 dependencies
 ------------
@@ -29,12 +30,12 @@ These files will be linked to symbolically in a directory ./public/.
 
 Some metadata files will also be generated below ./metadata/: For each article,
 there will be generated a .uuid and a .intermediate file; furthermore, files for
-data used in ./feed.xml and ./index.html will be built there and can be edited
-to customize the blog – namely the files url, author, uuid, title, index.tmpl,
-index_snippet.tmpl, article.tmpl.
+data used in ./feed.xml and ./index.html will, if non-existant, be built there
+and can be edited to customize the blog – namely the files url, author, uuid,
+title, index.tmpl, index_snippet.tmpl, article.tmpl.
 
-recipe to use server-side with git
-----------------------------------
+recipe to remotely manage a redo blog with git
+----------------------------------------------
 
 On your server, install the dependencies listed above. Then set up a repository
 for your blog files. Let's assume we want it to sit in our home directory and be
@@ -76,8 +77,14 @@ Client-side, do this (obviously, replace server and username):
     git commit -m 'set up blog metadata'
     git push origin master
 
-bugs
-----
+bugs and peculiarities
+----------------------
 
 Don't create a index.rst or index.md in the redo-managed directory, that will
 break things.
+
+The article title is derived in .md files from a first line prefixed with "% ",
+while all other headings are treated as sub-headings. In .rst files, the title
+is derived from a heading that must be at the top of the document, and be of an
+adornment style (such as underlining with "=") that must be used only once in
+it.
