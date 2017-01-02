@@ -1,5 +1,6 @@
 #!/bin/sh
 
 if [ ! -f "$1" ]; then
-  uuidgen > "$1"
+  uuidgen
+  date -u "+%s"
 fi

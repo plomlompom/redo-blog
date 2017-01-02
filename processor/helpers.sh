@@ -6,8 +6,30 @@ escape_html() {
 }
 
 read_and_escape_file() {
-  in=`cat "$1"`
+  in=$(cat "$1")
   escape_html "$in"
+}
+
+get_uuid_from_meta_file() {
+  probable_uuid=$(cat "$1" | head -1)
+  if printf "$probable_uuid" | grep -Eq "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"; then
+    printf "$probable_uuid"
+  else
+    echo "Malformed UUID in meta file." >&2
+    exit 1
+  fi
+}
+
+get_creation_date_from_meta_file_seconds() {
+  cat "$1" | sed -n '2p' | cut -d'_' -f1
+}
+
+get_creation_date_from_meta_file_nanoseconds() {
+  cat "$1" | sed -n '2p'
+}
+
+get_lastmod_date_from_meta_file() {
+  cat "$1" | sed -n '4p'
 }
 
 escape_url() {

@@ -29,10 +29,13 @@ You can then enter the directory and run redo there. This will generate article
 These files will be linked to symbolically in a directory ./public/.
 
 Some metadata files will also be generated below ./metadata/: For each article,
-there will be generated a .uuid and a .intermediate file; furthermore, files for
+there will be generated a .automatic_metadata (to contain an article's UUID,
+checksum, and creation/modification dates) and a .intermediate file (to contain
+pandoc-formatted article content like title and body); furthermore, files for
 data used in ./feed.xml and ./index.html will, if non-existant, be built there
-and can be edited to customize the blog – namely the files url, author, uuid,
-title, index.tmpl, index_snippet.tmpl, article.tmpl.
+and can be edited to customize the blog – namely the files url, author, title,
+index.tmpl, index_snippet.tmpl, article.tmpl. A blog-specific UUID and creation
+date is stored in ./metadata/automatic_metadata
 
 recipe to remotely manage a redo blog with git
 ----------------------------------------------

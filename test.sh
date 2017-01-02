@@ -1,10 +1,27 @@
 #!/bin/sh
 
-uuid_test()
+uuid_pattern='[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+
+blog_meta_file_test()
 {
-  uuid_file="$1"
-  printf "== %s UUID pattern match test ==\n" "$uuid_file"
-  if cat "$uuid_file" | grep -Eq "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"; then
+  meta_file="$1"
+  printf "== %s meta file pattern match test ==\n" "$meta_file"
+  if cat "$meta_file" | sed -n '1p' | grep -Eq '^'"$uuid_pattern"'$' \
+      && cat "$meta_file" | sed -n '2p' | grep -Eq "^[0-9]+$"; then
+    echo "== test SUCCESS =="
+  else
+    echo "== test FAILURE =="
+  fi
+}
+
+article_meta_file_test()
+{
+  meta_file="$1"
+  printf "== %s meta file pattern match test ==\n" "$meta_file"
+  if cat "$meta_file" | sed -n '1p' | grep -Eq '^'"$uuid_pattern"'$' \
+      && cat "$meta_file" | sed -n '2p' | grep -Eq "^[0-9]+_[0-9]+$" \
+      && cat "$meta_file" | sed -n '3p' | grep -Eq "^[0-9a-f]{32}$" \
+      && cat "$meta_file" | sed -n '2p' | grep -Eq "^[0-9]+_[0-9]+$"; then
     echo "== test SUCCESS =="
   else
     echo "== test FAILURE =="
@@ -24,7 +41,7 @@ diff_test()
   fi
 }
 
-# Set up test directory. 
+# Set up test directory, run file creations.
 expected_files_dir="test/test_files"
 generated_files_dir="test/test_dir"
 rm -rf "$generated_files_dir" 
@@ -38,10 +55,35 @@ cp "$working_dir/$expected_files_dir"/bar\ baz.md .
 redo
 cp "$working_dir/$expected_files_dir"/foo.rst .
 redo
-cd "$working_dir"
+
+# Test file modification tracking.
+update_datetime_start=$(cat "metadata/bar baz.feed_snippet" | grep '<updated>')
+sleep 1
+sed -i '2d' bar\ baz.md
+redo
+update_datetime_after_invisible_change=$(cat "metadata/bar baz.feed_snippet" | grep '<updated>')
+printf "== testing \"bar baz\"' update tag remaining unchanged with invisible source file change ==\n"
+if [ "$update_datetime_start" = "$update_datetime_after_invisible_change" ]; then
+    echo "== test SUCCESS =="
+else
+    echo "== test FAILURE =="
+fi
+sleep 1
+sed -i '2d' bar\ baz.md
+redo
+update_datetime_after_visible_change=$(cat "metadata/bar baz.feed_snippet" | grep '<updated>')
+printf "== testing \"bar baz\"' update tag changing with visible source file change ==\n"
+if [ "$update_datetime_start" = "$update_datetime_after_visible_change" ]; then
+    echo "== test FAILURE =="
+else
+    echo "== test SUCCESS =="
+fi
+cp "$working_dir/$expected_files_dir"/bar\ baz.md .
+redo
 
 # Compare metadata files.
-uuid_test "$generated_files_dir""/metadata/uuid"
+cd "$working_dir"
+blog_meta_file_test "$generated_files_dir""/metadata/automatic_metadata"
 for file in "$expected_files_dir"/metadata/*; do
   basename=$(basename "$file")
   cmp_file="$generated_files_dir/metadata/$basename"
@@ -53,7 +95,7 @@ for file in "$expected_files_dir"/*.html.ignoring; do
   basename=$(basename "$file")
   cmp_file="$generated_files_dir/${basename%.ignoring}"
   if [ ! "$file" = "$expected_files_dir""/index.html.ignoring" ]; then
-    uuid_test "${generated_files_dir}/metadata/${basename%.html.ignoring}.uuid"
+    article_meta_file_test "${generated_files_dir}/metadata/${basename%.html.ignoring}.automatic_metadata"
   fi
   generated_file="$cmp_file".ignoring
   cat "$cmp_file" | \

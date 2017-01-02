@@ -15,11 +15,11 @@ for file in "$metadata_dir"/*.intermediate; do
     rm "$file"
   fi
 done
-for file in "$metadata_dir"/*.uuid; do
+for file in "$metadata_dir"/*.automatic_metadata; do
   basename=$(basename "$file")
   if   test -f "$file" &&
-     ! test -f "${basename%.uuid}.md" &&
-     ! test -f "${basename%.uuid}.rst"; then
+     ! test -f "${basename%.automatic_metadata}.md" &&
+     ! test -f "${basename%.automatic_metadata}.rst"; then
     rm "$file"
   fi
 done

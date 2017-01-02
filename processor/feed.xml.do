@@ -4,23 +4,23 @@
 . ./helpers.sh
 metadata_dir=metadata
 author_file="$metadata_dir"/author
-uuid_file="$metadata_dir"/uuid
+meta_file="$metadata_dir"/automatic_metadata
 title_file="$metadata_dir"/title
 url_file="$metadata_dir"/url
 redo-ifchange "$url_file"
 redo-ifchange "$author_file"
-redo-ifchange "$uuid_file"
+redo-ifchange "$meta_file"
 redo-ifchange "$title_file"
 
 # Build some variables. XML-escape even file contents that should not contain
 # dangerous characters, just to avoid any XML trouble.
-srcdir=`pwd`
-basepath=$(get_basepath "${metadata_dir}/")
-title=`read_and_escape_file "$title_file" | head -1`
-author=`read_and_escape_file "$author_file" | head -1`
-uuid=`read_and_escape_file "$uuid_file" | head -1`
+srcdir=$(pwd)
 tmp_snippets_dir=.tmp_feed_snippets
-feed_gen_date=$(stat -c%Y "${uuid_file}")
+basepath=$(get_basepath "${metadata_dir}/")
+title=$(read_and_escape_file "$title_file" | head -1)
+author=$(read_and_escape_file "$author_file" | head -1)
+uuid=$(get_uuid_from_meta_file "$meta_file")
+feed_gen_date=$(get_creation_date_from_meta_file_seconds "$meta_file")
 
 # Write majority of feed head.
 cat << EOF
@@ -37,16 +37,16 @@ printf "<id>urn:uuid:%s</id>\n" "$uuid"
 mkdir -p "$tmp_snippets_dir"
 for file in ./*.rst ./*.md; do
   if [ -e "$file" ]; then
-    uuid_file="${metadata_dir}/${file%.*}.uuid"
-    redo-ifchange "$uuid_file"
-    published=$(stat -c%Y "${uuid_file}")
+    meta_file="${metadata_dir}/${file%.*}.automatic_metadata"
+    redo-ifchange "$meta_file"
+    published=$(get_creation_date_from_meta_file_nanoseconds "$meta_file")
     snippet_file=./${metadata_dir}/"${file%.*}.feed_snippet"
     redo-ifchange "$snippet_file"
     ln -s "$srcdir/$snippet_file" "./${tmp_snippets_dir}/${published}"
   fi
 done
 
-# Derive feed modification date from snippets. Fallback to uuid file mod date.
+# Derive feed modification date from snippets. Fallback to blog creation date.
 n_snippet_files=`ls -1 ./${metadata_dir}/*.feed_snippet 2>/dev/null | wc -l`
 if [ $n_snippet_files != 0 ]
 then

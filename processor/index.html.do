@@ -17,13 +17,12 @@ tmp_snippets_dir=.tmp_index_snippets
 mkdir -p "$tmp_snippets_dir"
 for file in ./*.rst ./*.md; do
   if [ -e "$file" ]; then
-    uuid_file="${metadata_dir}/${file%.*}.uuid"
-    redo-ifchange "$uuid_file"
-    published=`stat -c%y "${uuid_file}"`
-    published_unix=$(date -u "+%s%N" -d "${published}")
+    meta_file="${metadata_dir}/${file%.*}.automatic_metadata"
+    redo-ifchange "$meta_file"
+    published=$(get_creation_date_from_meta_file_nanoseconds "$meta_file")
     snippet_file="${metadata_dir}/${file%.*}.index_snippet"
     redo-ifchange "$snippet_file"
-    ln -s "$srcdir/$snippet_file" "./${tmp_snippets_dir}/${published_unix}"
+    ln -s "$srcdir/$snippet_file" "./${tmp_snippets_dir}/${published}"
   fi
 done
 
