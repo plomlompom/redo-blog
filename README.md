@@ -47,7 +47,7 @@ called `blog`:
     #!/bin/sh
     BLOGDIR=~/blog
     GIT_WORK_TREE=$BLOGDIR git checkout -f
-    cd $BLOGDIR
+    cd \$BLOGDIR
     redo
     EOF
     chmod a+x blog.git/hooks/post-update
@@ -62,14 +62,14 @@ Enable management of `~/blog` via redo-blog:
 Link to the `public` subdirectory from wherever your web server expects your
 public web content to sit:
 
-    link -s ~/blog/public /var/www/html/blog
+    ln -s ~/blog/public /var/www/html/blog
 
-Client-side, do this:
+Client-side, do this (obviously, replace server and username):
 
     cd ~
     git init blog
     cd blog
-    git remote add origin ssh://user@example.org:~/blog.git
+    git remote add origin ssh://user@example.org:/home/user/blog.git
     mkdir metadata
     echo 'https://example.org/blog/' > metadata/url
     git add metadata/url
