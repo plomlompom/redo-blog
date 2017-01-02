@@ -65,7 +65,8 @@ public web content to sit:
 
     ln -s ~/blog/public /var/www/html/blog
 
-Client-side, do this (obviously, replace server and username):
+Client-side, do this (you obviously need to customize this code; at least
+replace the username `user` and the server name `example.org`):
 
     cd ~
     git init blog
