@@ -5,6 +5,7 @@ cat << EOF
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="alternate" type="application/rss+xml" title="atom feed" href="feed.xml" />
 <title>%TITLE%</title>
 </head>
 <body>
