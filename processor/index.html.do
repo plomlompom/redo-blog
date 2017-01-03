@@ -42,6 +42,6 @@ rm -rf "${tmp_snippets_dir}"
 # Put data into template.
 template=$(cat "$template_file")
 printf "%s" "$template" | \
-sed 's/%TITLE%/'"$title"'/g' | \
-sed 's/%LIST%/'"$list"'/g' | \
+sed 's/%BLOG_TITLE%/'"$title"'/g' | \
+sed 's/%INDEX%/'"$list"'/g' | \
 tr '\a' '%'

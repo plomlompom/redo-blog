@@ -23,7 +23,7 @@ header p { margin: 0; }
 <article>
 <header>
 <h1>%ARTICLE_TITLE_HTML%</h1>
-<p><time datetime="%DATETIME_CREATED_RFC3339%">%DATETIME_CREATED_FRIENDLY%</time></p>
+<p><time>%DATE_CREATED%</time></p>
 </header>
 %BODY%
 </article>

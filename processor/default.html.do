@@ -20,8 +20,7 @@ title_html=$(printf "%s" "$title_html" | prep_sed)
 title_plaintext=$(escape_html "$title_plaintext" | prep_sed)
 body=$(cat "$intermediate_file" | sed 1d | prep_sed)
 datetime_created_unix=$(get_creation_date_from_meta_file_seconds "$meta_file")
-datetime_created_rfc3339=$(date -u "+%Y-%m-%dT%TZ" -d "@${datetime_created_unix}")
-datetime_created_friendly=$(date -u "+%Y-%m-%d %H:%M (UTC)" -d "@${datetime_created_unix}")
+datetime_created_friendly=$(date -u "+%Y-%m-%d" -d "@${datetime_created_unix}")
 
 # Put data into template.
 template=$(cat "$template_file")
@@ -29,7 +28,6 @@ printf "%s" "$template" | \
 sed 's/%BLOG_TITLE%/'"$blog_title"'/g' | \
 sed 's/%ARTICLE_TITLE_ESCAPED%/'"$title_plaintext"'/g' | \
 sed 's/%ARTICLE_TITLE_HTML%/'"$title_html"'/g' | \
-sed 's/%DATETIME_CREATED_RFC3339%/'"$datetime_created_rfc3339"'/g' | \
-sed 's/%DATETIME_CREATED_FRIENDLY%/'"$datetime_created_friendly"'/g' | \
+sed 's/%DATE_CREATED%/'"$datetime_created_friendly"'/g' | \
 sed 's/%BODY%/'"$body"'/g' | \
 tr '\a' '%'

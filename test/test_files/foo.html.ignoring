@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<style type="text/css">
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.17em; }
+h4 { font-size: 1.12em; }
+h5 { font-size: .83em; }
+h6 { font-size: .75em; }
+header h1 { margin-bottom: 0.1em; }
+header p { margin: 0; }
+</style>
 <title>Yet another blog – a title with some nasty characters: &amp;&lt;&gt;&quot;&#x27; %BODY%</title>
 </head>
 <body>
@@ -8,7 +19,7 @@
 <article>
 <header>
 <h1>a title with some nasty characters: &amp;&lt;&gt;&quot;' %BODY%</h1>
-<p><time datetime="IGNORE">IGNORE</time></p>
+<p><time>IGNORE</time></p>
 </header>
 <p>this text contains some special characters: /;%'&quot;&gt;&lt;&amp;äöüß</p>
 <h2 id="some-sub-heading">some sub-heading</h2>

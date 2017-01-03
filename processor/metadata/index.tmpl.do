@@ -10,13 +10,13 @@ cat << EOF
 h1 { font-size: 2em; }
 </style>
 <link rel="alternate" type="application/rss+xml" title="atom feed" href="feed.xml" />
-<title>%TITLE%</title>
+<title>%BLOG_TITLE%</title>
 </head>
 <body>
-<h1>%TITLE%</h1>
+<h1>%BLOG_TITLE%</h1>
 <p><a href="feed.xml">feed</a></p>
 <ul>
-%LIST%
+%INDEX%
 </ul>
 </body>
 </html>
