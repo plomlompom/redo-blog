@@ -11,10 +11,10 @@ rstfile="../${1%.intermediate}.rst"
 # Build intermediate file.
 if [ -f "$rstfile" ]; then
   redo-ifchange "$rstfile"
-  pandoc -f rst --template="$template" --mathml -t html5 "$rstfile" --base-header-level=2 > "$3"
+  pandoc -f rst --template="$template" --mathml -t html5 "$rstfile" --base-header-level=2 --email-obfuscation=references > "$3"
 elif [ -f "$mdfile" ]; then
   redo-ifchange "$mdfile"
-  pandoc -f markdown --template="$template" --mathml -t html5 "$mdfile" --base-header-level=2 > "$3"
+  pandoc -f markdown --template="$template" --mathml -t html5 "$mdfile" --base-header-level=2 --email-obfuscation=references > "$3"
 fi
 
 # Update meta file if appropriate.
