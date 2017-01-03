@@ -23,7 +23,7 @@ header p { margin: 0; }
 <article>
 <header>
 <h1>%ARTICLE_TITLE_HTML%</h1>
-<p><time>%DATE_CREATED%</time></p>
+<p>created: <time>%DATE_CREATED%</time> / last update: <time>%DATE_UPDATED%</time></p>
 </header>
 %BODY%
 </article>

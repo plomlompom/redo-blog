@@ -19,7 +19,7 @@ header p { margin: 0; }
 <article>
 <header>
 <h1>foo</h1>
-<p><time>IGNORE</time></p>
+<p>created: <time>IGNORE</time> / last update: <time>IGNORE</time></p>
 </header>
 <h2 id="bar">bar</h2>
 <p>bar</p>

@@ -19,7 +19,7 @@ header p { margin: 0; }
 <article>
 <header>
 <h1>a title with some nasty characters: &amp;&lt;&gt;&quot;' %BODY%</h1>
-<p><time>IGNORE</time></p>
+<p>created: <time>IGNORE</time> / last update: <time>IGNORE</time></p>
 </header>
 <p>this text contains some special characters: /;%'&quot;&gt;&lt;&amp;äöüß</p>
 <h2 id="some-sub-heading">some sub-heading</h2>
