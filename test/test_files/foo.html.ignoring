@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
 <style type="text/css">
 h1 { font-size: 2em; }
@@ -13,8 +11,6 @@ header h1 { margin-bottom: 0.1em; }
 header p { margin: 0; }
 </style>
 <title>Yet another blog – a title with some nasty characters: &amp;&lt;&gt;&quot;&#x27; %BODY%</title>
-</head>
-<body>
 <a href="index.html">Yet another blog</a>
 <article>
 <header>
@@ -27,5 +23,3 @@ header p { margin: 0; }
 <h2 id="another-sub-heading">another sub-heading</h2>
 <p>note that should be ignored but \ should give a backlash</p>
 </article>
-</body>
-</html>

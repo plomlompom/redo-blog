@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
 <style type="text/css">
 h1 { font-size: 2em; }
@@ -13,8 +11,6 @@ header h1 { margin-bottom: 0.1em; }
 header p { margin: 0; }
 </style>
 <title>Yet another blog – foo bar baz</title>
-</head>
-<body>
 <a href="index.html">Yet another blog</a>
 <article>
 <header>
@@ -25,5 +21,3 @@ header p { margin: 0; }
 <h2 id="bar">bar</h2>
 <p>baz</p>
 </article>
-</body>
-</html>

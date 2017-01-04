@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-<link href="http://example.org/" />
+<link href="http://example.org/" rel="alternate" type="text/html" />
 <link href="http://example.org/feed.xml" rel="self" />
 <title type="html">Yet another blog</title>
 <author><name>Joe Sixpack</name></author>
@@ -12,7 +12,7 @@
 <id>urn:uuid:IGNORE</id>
 <updated>IGNORE</updated>
 <published>IGNORE</published>
-<link href="http://example.org/test.html" />
+<link href="http://example.org/test.html" rel="alternate" type="text/html" />
 <content type="html">
 &lt;p&gt;foo&lt;/p&gt;
 &lt;h2 id=&quot;bar&quot;&gt;bar&lt;/h2&gt;
@@ -25,7 +25,7 @@
 <id>urn:uuid:IGNORE</id>
 <updated>IGNORE</updated>
 <published>IGNORE</published>
-<link href="http://example.org/bar%20baz.html" />
+<link href="http://example.org/bar%20baz.html" rel="alternate" type="text/html" />
 <content type="html">
 &lt;h2 id=&quot;bar&quot;&gt;bar&lt;/h2&gt;
 &lt;p&gt;bar&lt;/p&gt;
@@ -39,7 +39,7 @@
 <id>urn:uuid:IGNORE</id>
 <updated>IGNORE</updated>
 <published>IGNORE</published>
-<link href="http://example.org/foo.html" />
+<link href="http://example.org/foo.html" rel="alternate" type="text/html" />
 <content type="html">
 &lt;p&gt;this text contains some special characters: /;%&#x27;&amp;quot;&amp;gt;&amp;lt;&amp;amp;äöüß&lt;/p&gt;
 &lt;h2 id=&quot;some-sub-heading&quot;&gt;some sub-heading&lt;/h2&gt;
