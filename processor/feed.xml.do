@@ -27,7 +27,7 @@ cat << EOF
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 EOF
-printf "<link href=\"%s\" />\n" "$basepath"
+printf "<link href=\"%s\" rel=\"alternate\" type=\"text/html\" />\n" "$basepath"
 printf "<link href=\"%sfeed.xml\" rel=\"self\" />\n" "$basepath"
 printf "<title type=\"html\">%s</title>\n" "$title"
 printf "<author><name>%s</name></author>\n" "$author"
