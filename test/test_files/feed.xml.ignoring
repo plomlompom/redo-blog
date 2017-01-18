@@ -12,7 +12,7 @@
 <id>urn:uuid:IGNORE</id>
 <updated>IGNORE</updated>
 <published>IGNORE</published>
-<link href="http://example.org/test.html" rel="alternate" type="text/html" />
+<link href="http://example.org/te%26quot%3Bst.html" rel="alternate" type="text/html" />
 <content type="html">
 &lt;p&gt;foo&lt;/p&gt;
 &lt;h2 id=&quot;bar&quot;&gt;bar&lt;/h2&gt;

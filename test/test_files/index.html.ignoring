@@ -10,5 +10,5 @@ h1 { font-size: 2em; }
 <ul>
 <li><a href="foo.html">a title with some nasty characters: &amp;&lt;&gt;&quot;' %BODY%</a> (<time>IGNORE</time>)</li>
 <li><a href="bar%20baz.html">foo</a> (<time>IGNORE</time>)</li>
-<li><a href="test.html">foo <em>bar</em> <strong>baz</strong></a> (<time>IGNORE</time>)</li>
+<li><a href="te%26quot%3Bst.html">foo <em>bar</em> <strong>baz</strong></a> (<time>IGNORE</time>)</li>
 </ul>
