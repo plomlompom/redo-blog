@@ -13,7 +13,7 @@ link_files_in_dir () {
         [ $(basename "$file") != "." ] && \
         [ $(basename "$file") != ".." ]; then
       dir=$(basename "$file")
-      mkdir "$dir"
+      mkdir -p "$dir"
       cd "$dir"
         link_files_in_dir "$srcdir/$dir"
       cd ..
