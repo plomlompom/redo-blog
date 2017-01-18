@@ -20,4 +20,9 @@ header p { margin: 0; }
 <p>foo</p>
 <h2 id="bar">bar</h2>
 <p>baz</p>
+<footer>
+Links back:
+<ul>
+</ul>
+</footer>
 </article>

@@ -22,4 +22,11 @@ header p { margin: 0; }
 <p>and more than one paragraph</p>
 <h2 id="another-sub-heading">another sub-heading</h2>
 <p>note that should be ignored but \ should give a backlash</p>
+<footer>
+Links back:
+<ul>
+<li><a href="http://example.org/">http://example.org/</a></li>
+<li><a href="http://example.com/some&quot;what&#x27;danger&lt;&gt;us%URL">http://example.com/some&quot;what&#x27;danger&lt;&gt;us%URL</a></li>
+</ul>
+</footer>
 </article>

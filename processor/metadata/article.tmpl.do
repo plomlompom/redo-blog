@@ -22,6 +22,11 @@ header p { margin: 0; }
 <p>created: <time>%DATE_CREATED%</time> / last update: <time>%DATE_UPDATED%</time></p>
 </header>
 %BODY%
+<footer>
+Links back:
+<ul>%LINKBACKS%
+</ul>
+</footer>
 </article>
 EOF
 fi

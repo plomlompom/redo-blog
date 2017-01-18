@@ -21,4 +21,9 @@ header p { margin: 0; }
 <p>bar</p>
 <h3 id="bar-1">bar</h3>
 <p>bar</p>
+<footer>
+Links back:
+<ul>
+</ul>
+</footer>
 </article>

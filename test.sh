@@ -54,6 +54,7 @@ redo
 cp "$working_dir/$expected_files_dir"/bar\ baz.md .
 redo
 cp "$working_dir/$expected_files_dir"/foo.rst .
+cp "$working_dir/$expected_files_dir"/foo.links .
 redo
 
 # Test file modification tracking.
