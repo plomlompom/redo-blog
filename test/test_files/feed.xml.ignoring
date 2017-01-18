@@ -40,8 +40,8 @@
 <updated>IGNORE</updated>
 <published>IGNORE</published>
 <link href="http://example.org/foo.html" rel="alternate" type="text/html" />
-<link href="http://example.org/" rel="replies">http://example.org/</link>
-<link href="http://example.com/some&quot;what&#x27;danger&lt;&gt;us%URL" rel="replies">http://example.com/some&quot;what&#x27;danger&lt;&gt;us%URL</link>
+<link href="http://example.org/" rel="replies" />
+<link href="http://example.com/some$()wh%20at&#x27;da&amp;quot;ngerusURL" rel="replies" />
 <content type="html">
 &lt;p&gt;this text contains some special characters: /;%&#x27;&amp;quot;&amp;gt;&amp;lt;&amp;amp;äöüß&lt;/p&gt;
 &lt;h2 id=&quot;some-sub-heading&quot;&gt;some sub-heading&lt;/h2&gt;

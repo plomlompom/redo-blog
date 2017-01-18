@@ -26,7 +26,7 @@ header p { margin: 0; }
 Links back:
 <ul>
 <li><a href="http://example.org/">http://example.org/</a></li>
-<li><a href="http://example.com/some&quot;what&#x27;danger&lt;&gt;us%URL">http://example.com/some&quot;what&#x27;danger&lt;&gt;us%URL</a></li>
+<li><a href="http://example.com/some$()wh%20at&#x27;da&amp;quot;ngerusURL">http://example.com/some$()wh%20at&#x27;da&amp;quot;ngerusURL</a></li>
 </ul>
 </footer>
 </article>
