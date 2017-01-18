@@ -3,7 +3,7 @@
 # Handle URL from .links file.
 prep_url() {
   url=$(escape_html "$1")
-  printf "\n<link href=\"%s\" rel=\"replies\">%s</link>" "$url" "$url"
+  printf "\n<link href=\"%s\" rel=\"replies\" />" "$url"
 }
 
 # Pull in dependencies. 
