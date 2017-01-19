@@ -21,6 +21,7 @@ redo-ifchange "$article_tmpl_file"
 linkback_tmpl_file="${metadata_dir}"/linkback.tmpl
 redo-ifchange "$linkback_tmpl_file"
 replies_file="${1%.html}.links"
+redo-ifchange "$replies_file"
 
 # Build entry data.
 blog_title=$(read_and_escape_file "$title_file" | head -1 | prep_sed)
@@ -33,9 +34,7 @@ datetime_created_unix=$(get_creation_date_from_meta_file_seconds "$meta_file")
 date_created=$(date -u "+%Y-%m-%d" -d "@${datetime_created_unix}")
 datetime_lastmod_unix=$(get_lastmod_date_from_meta_file "$meta_file")
 date_updated=$(date -u "+%Y-%m-%d" -d "@${datetime_lastmod_unix}")
-if test -f "$replies_file"; then
-  replies=$(while read line; do prep_url "$line"; done < "$replies_file")
-fi
+replies=$(while read line; do prep_url "$line"; done < "$replies_file")
 
 # Put data into template.
 template=$(cat "$article_tmpl_file")

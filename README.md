@@ -27,8 +27,9 @@ run ./add_dir.sh DIRECTORY.
 You can then enter the directory and run redo there. This will generate article
 .html files from all .md and .rst files, plus a ./index.html, and a ./feed.xml.
 These files will be linked to symbolically in a directory ./public/. If you
-provide a file suffixed .links to basename of an article file, these links will
-be added as article-specific linkbacks to the .html file and the feed entry.
+provide or edit a file suffixed .links to basename of an article file, these
+links will be added as article-specific linkbacks to the .html file and the feed
+entry.
 
 Some metadata files will also be generated below ./metadata/: For each article,
 there will be generated a .automatic_metadata (to contain an article's UUID,

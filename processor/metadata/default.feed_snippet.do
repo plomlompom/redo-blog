@@ -14,6 +14,7 @@ redo-ifchange "$meta_file"
 intermediate_file="${1%.feed_snippet}.intermediate"
 redo-ifchange "$intermediate_file"
 replies_file="${src_file%.*}.links"
+redo-ifchange "$replies_file"
 
 # Get variables, write entry.
 html_file=$(escape_url "${1%.feed_snippet}.html")
@@ -24,9 +25,7 @@ uuid=$(get_uuid_from_meta_file "$meta_file")
 published_unix=$(get_creation_date_from_meta_file_seconds "$meta_file")
 published_rfc3339=$(date -u "+%Y-%m-%dT%TZ" -d "@${published_unix}")
 body=$(read_and_escape_file "$intermediate_file" | sed 1d)
-if test -f "$replies_file"; then
-  replies=$(while read line; do prep_url "$line"; done < "$replies_file")
-fi
+replies=$(while read line; do prep_url "$line"; done < "$replies_file")
 printf "<entry>\n"
 printf "<title type=\"html\">%s</title>\n" "$title"
 printf "<id>urn:uuid:%s</id>\n" "$uuid"
