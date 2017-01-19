@@ -7,8 +7,6 @@ meta_file="${1%.index_snippet}.automatic_metadata"
 redo-ifchange "$meta_file"
 intermediate_file="${1%.index_snippet}.intermediate"
 redo-ifchange "$intermediate_file"
-html_file="${src_file%.*}.html"
-redo-ifchange "$html_file"
 template_file=index_snippet.tmpl
 redo-ifchange "$template_file"
 
