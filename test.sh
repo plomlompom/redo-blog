@@ -91,6 +91,14 @@ for file in "$expected_files_dir"/metadata/*; do
   diff_test "$file" "$cmp_file"
 done
 
+# Compare .links files.
+cd "$working_dir"
+for file in "$expected_files_dir"/*.links "$expected_files_dir"/*.captcha; do
+  basename=$(basename "$file")
+  cmp_file="$generated_files_dir/$basename"
+  diff_test "$file" "$cmp_file"
+done
+
 # Compare generated HTML files. Ignore variable dates.
 for file in "$expected_files_dir"/*.html.ignoring; do
   basename=$(basename "$file")
