@@ -10,7 +10,8 @@ prep_url() {
 # Pull in global dependencies.
 . ./helpers.sh
 metadata_dir=metadata
-captchas_dir=captchas
+captchas_dir=captchas/public
+mkdir -p "$captchas_dir"
 meta_file="${metadata_dir}/${1%.html}.automatic_metadata"
 redo-ifchange "$meta_file"
 intermediate_file="${metadata_dir}/${1%.html}.intermediate"
