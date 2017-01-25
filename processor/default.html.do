@@ -38,6 +38,7 @@ date_created=$(date -u "+%Y-%m-%d" -d "@${datetime_created_unix}")
 datetime_lastmod_unix=$(get_lastmod_date_from_meta_file "$meta_file")
 date_updated=$(date -u "+%Y-%m-%d" -d "@${datetime_lastmod_unix}")
 replies=$(while read line; do prep_url "$line"; done < "$replies_file")
+captcha=$(escape_html "$(cat "$captcha_file" | sed -n 2p)" | prep_sed)
 
 # Put data into template.
 template=$(cat "$article_tmpl_file")
@@ -49,4 +50,5 @@ sed 's/%DATE_CREATED%/'"$date_created"'/g' | \
 sed 's/%DATE_UPDATED%/'"$date_updated"'/g' | \
 sed 's/%BODY%/'"$body"'/g' | \
 sed 's/%LINKBACKS%/'"$replies"'/g' | \
+sed 's/%CAPTCHA%/'"$captcha"'/g' | \
 tr '\a' '%'

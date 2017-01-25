@@ -26,6 +26,7 @@ header p { margin: 0; }
 Links back:
 <ul>%LINKBACKS%
 </ul>
+Captcha: %CAPTCHA%
 </footer>
 </article>
 EOF
