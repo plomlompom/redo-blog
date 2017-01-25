@@ -10,6 +10,7 @@ prep_url() {
 # Pull in global dependencies.
 . ./helpers.sh
 metadata_dir=metadata
+captchas_dir=captchas
 meta_file="${metadata_dir}/${1%.html}.automatic_metadata"
 redo-ifchange "$meta_file"
 intermediate_file="${metadata_dir}/${1%.html}.intermediate"
@@ -22,6 +23,8 @@ linkback_tmpl_file="${metadata_dir}"/linkback.tmpl
 redo-ifchange "$linkback_tmpl_file"
 replies_file="${1%.html}.links"
 redo-ifchange "$replies_file"
+captcha_file="$captchas_dir/${1%.html}"
+redo-ifchange "$captcha_file"
 
 # Build entry data.
 blog_title=$(read_and_escape_file "$title_file" | head -1 | prep_sed)

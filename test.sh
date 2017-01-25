@@ -93,9 +93,17 @@ done
 
 # Compare .links files.
 cd "$working_dir"
-for file in "$expected_files_dir"/*.links "$expected_files_dir"/*.captcha; do
+for file in "$expected_files_dir"/*.links; do
   basename=$(basename "$file")
   cmp_file="$generated_files_dir/$basename"
+  diff_test "$file" "$cmp_file"
+done
+
+# Compare captcha files.
+cd "$working_dir"
+for file in "$expected_files_dir"/captchas/*; do
+  basename=$(basename "$file")
+  cmp_file="$generated_files_dir/captchas/$basename"
   diff_test "$file" "$cmp_file"
 done
 
