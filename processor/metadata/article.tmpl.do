@@ -27,6 +27,7 @@ Links back:
 <ul>%LINKBACKS%
 </ul>
 Captcha: %CAPTCHA%
+Title in URL: %TITLE_URL%
 </footer>
 </article>
 EOF

@@ -33,6 +33,7 @@ title_html=$(cat "$intermediate_file" | head -1)
 title_plaintext=`echo "$title_html" | html2text`
 title_html=$(printf "%s" "$title_html" | prep_sed)
 title_plaintext=$(escape_html "$title_plaintext" | prep_sed)
+title_url=$(escape_html "${1%.html}" | prep_sed)
 body=$(cat "$intermediate_file" | sed 1d | prep_sed)
 datetime_created_unix=$(get_creation_date_from_meta_file_seconds "$meta_file")
 date_created=$(date -u "+%Y-%m-%d" -d "@${datetime_created_unix}")
@@ -52,4 +53,5 @@ sed 's/%DATE_UPDATED%/'"$date_updated"'/g' | \
 sed 's/%BODY%/'"$body"'/g' | \
 sed 's/%LINKBACKS%/'"$replies"'/g' | \
 sed 's/%CAPTCHA%/'"$captcha"'/g' | \
+sed 's/%TITLE_URL%/'"$title_url"'/g' | \
 tr '\a' '%'
